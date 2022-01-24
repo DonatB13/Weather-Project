@@ -8,6 +8,20 @@ body {
     font-family: sans-serif;
     text-transform: capitalize;
     color: black;
+    background:#262626;
+}
+
+.cover {
+    position: fixed;
+    background:#262626;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
 }
 
 .layout-wrapper {
@@ -15,8 +29,9 @@ body {
     place-items: center;
 }
 
-.panel {
-    display: grid;
+.panel 
+{
+    display: none;
     grid-template-columns: repeat(3, 1fr);
     border: 4px solid black;
     border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
@@ -67,4 +82,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 600px) {
+	.temperature-description {
+		font-size: 28px;
+	}
 }

@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="animation_style.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Weather</title>
 </head>
 <body>
+    <div class="cover">
+        <div class="ring">Loading
+            <span></span>
+        </div>
+    </div>
     <div class="layout-wrapper">
         <div class="panel">
             <div class="location-wrapper">
@@ -26,9 +33,7 @@
             <div class="temperature-description"><h2>Cold</h2></div>
         </div>
     </div>
-
-    
-    <script src = "skycons.js"></script>
     <script src = "app.js"></script>
+    <script src = "skycons.js"></script>
 </body>
 </html>

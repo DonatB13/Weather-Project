@@ -1,13 +1,17 @@
+
 window.addEventListener('load', () => {
+
     //Define variables
+    let ring = document.querySelector('.ring');
     let long;
     let lat;
+	let panel = document.querySelector(".panel");
     let temperatureDescription = document.querySelector(".temperature-description");
     let temperatureDegree = document.querySelector(".temperature-degree");
     let locationTimeZone = document.querySelector(".location-timezone");
     let temperatureSection = document.querySelector(".temperature-section");
     let temperatureSpan = document.querySelector(".temperature-section span");
-
+	
     // Maps to translate API calls into the corresponding icons used by Skycons library
     let iconMap = new Map();
     iconMap.set('01d', 'CLEAR_DAY');
@@ -29,7 +33,7 @@ window.addEventListener('load', () => {
 
     let backgroundMap = new Map();
     backgroundMap.set('01d', "url('./img/clear_day.png')");
-    backgroundMap.set('01n', "url('./img/clear_night.png')");
+    backgroundMap.set('01n', "url('./img/clear_night.jpg')");
     backgroundMap.set('02d', "url('./img/cloudy.jpg')");
     backgroundMap.set('02n', "url('./img/cloudy.jpg')");
     backgroundMap.set('03d', "url('./img/cloudy.jpg')");
@@ -42,7 +46,7 @@ window.addEventListener('load', () => {
         navigator.geolocation.getCurrentPosition(position =>{
             long = position.coords.longitude;
             lat = position.coords.latitude;
-            
+            //Show panel
             const proxy = `https://corsanywhere.herokuapp.com/`;
             const api = `${proxy}api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=imperial&appid=69b294482b761218267bbdef9d82e278`;
             
@@ -60,10 +64,6 @@ window.addEventListener('load', () => {
                 console.log(temp);
                 temperatureDegree.textContent = Math.round(temp);
                 temperatureDescription.textContent = summary[0].description;
-                document.body.style.background = backgroundMap.get(icon);
-                document.body.style.backgroundSize = "cover";
-                document.body.style.backgroundPosition = "center center";
-                document.body.style.backgroundAttachment = "fixed";
                 locationTimeZone.textContent = name;
                 
                 // invoke setIcon function
@@ -80,10 +80,32 @@ window.addEventListener('load', () => {
                         temperatureDegree.textContent = Math.round(temp);
                     }
                 });
+                document.body.style.background = backgroundMap.get(icon);
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center center";
+                document.body.style.backgroundAttachment = "fixed";
+
+                sleep(3000).then(() => { 
+                    //ring.style.display = 'none';
+                    $( ".cover" ).fadeOut( "slow", function() {
+                        panel.style.display = "grid";
+                      });
+                    });
             })
-        });
-    }
-        //Todo else when location is not enabled
+
+
+
+        },
+        function(error)   
+        { 
+            if (error.code == error.PERMISSION_DENIED) 
+            {	
+            //Hide panel until we are not sure that locations are allowed
+            panel.style.display = "none";        
+            alert("[WheaterApp] Please allow locations!");    
+            }    
+        });   
+     }
 
     /** @brief Sets the weather icon
      *
@@ -108,3 +130,7 @@ window.addEventListener('load', () => {
         return;
     }
 });
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
